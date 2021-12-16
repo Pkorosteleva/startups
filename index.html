@@ -1,0 +1,189 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./js/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script src ="jquery.ddslick.min.js" type="text/javascript"></script>
+    <script src="./js/msdropdown/jquery.dd.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./js/geostats-master/lib/geostats.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/msdropdown/dd.css" />
+	<style>
+		html, body { 
+        margin: 0;     /* Remove margins */ 
+        height: 100%;  /* Fill the window */ 
+      }
+      map { 
+        min-height: 0; 
+        flex: 1; 
+        height: 70%;
+      }
+      .geostats-legend div {
+  margin:3px 10px 5px 10px;
+  clear:left;
+}
+
+.geostats-legend-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.geostats-legend-block {
+  border: 1px solid #555555;
+  display: block;
+  float: left;
+  height: 12px;
+  margin: 0 5px 0 20px;
+  width: 20px;
+}
+
+.geostats-legend-counter { 
+  font-size: 0.8em;
+  color:#666;
+  font-style: italic;
+}
+  </style>
+  </head>
+  <body>
+  <div class = "grid">
+    <div class = "row">
+      <div id = "manager" >
+        <div class="form-group" style="font-family: Tahoma, sans-serif;"> 
+          <label for="var" style="margin-left:5px;margin-right:5px;" id="lab_var">Показатель:</label> 
+          <select class="custom-select custom-select-sm" id="var" style="width:auto; height:3%;font-family: Tahoma, sans-serif;"> 
+          </select>
+        </div>
+    <div class = "row">
+      <div id = "manager" >
+        <div class="form-group" style="font-family: Tahoma, sans-serif;"> 
+          <label for="year" style="margin-left:5px;margin-right:5px;" id="lab_year">Год:</label> 
+          <select class="custom-select custom-select-sm" id="year" style="width:auto; height:3%;font-family: Tahoma, sans-serif;">
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class = "row">
+      <div id = "manager" >
+        <div class="form-group" style="font-family: Tahoma, sans-serif; height:3%"> 
+          <label for="class_method" style="margin-left:5px;margin-right:5px;" id="lab_class">Метод классификации:</label> 
+          <select id = "class">
+            <option selected value="quantile">Квантили</option>
+            <option value="equal">Равные интервалы</option>
+            <option value="jenks">Естественные интевалы</option>
+            <option value="stdev">Среднеквадратическое отклонение</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class = "row">
+      <div id = "manager" >
+        <div class="form-group" style="font-family: Tahoma, sans-serif;"> 
+          <label for="pal" style="margin-left:5px;margin-right:5px; width:300px;" id="lab_pal">Палитра:</label>
+            <div id="myDropdown"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+    
+    var ddData = [
+      {
+          value: "GnBu",
+          selected: false,
+          imageSrc: "../img/gnbu.jpg"
+      },
+      {
+          value: "Greens",
+          selected: false,
+          imageSrc: "../img/greens.jpg"
+      },
+      {
+          value: "Greys",
+          selected: false,
+          imageSrc: "../img/greys.jpg"
+      },
+      {
+          value: "Oranges",
+          selected: false,
+          imageSrc: "../img/oranges.jpg"
+      },
+      {
+          value: "OrRd",
+          selected: false,
+          imageSrc: "../img/orrd.jpg"
+      },
+      {
+          value: "PuBu",
+          selected: false,
+          imageSrc: "../img/pubu.jpg"
+      },
+      {
+          value: "PuBuGn",
+          selected: false,
+          imageSrc: "../img/pubugn.jpg"
+      },
+      {
+          value: "Purples",
+          selected: false,
+          imageSrc: "../img/purples.jpg"
+      },
+      {
+          value: "RdPu",
+          selected: false,
+          imageSrc: "../img/rdpu.jpg"
+      },
+      {
+          value: "Reds",
+          selected: false,
+          imageSrc: "../img/reds.jpg"
+      },
+      {
+          value: "YlGn",
+          selected: false,
+          imageSrc: "../img/ylgn.jpg"
+      },
+      {
+          value: "YlGnBu",
+          selected: false,
+          imageSrc: "../img/ylgnbu.jpg"
+      },
+      {
+          value: "YlOrRd",
+          selected: false,
+          imageSrc: "../img/ylorrd.jpg"
+      },
+      {
+          value: "YlOrBr",
+          selected: true,
+          imageSrc: "../img/ylorbr.jpg"
+      }
+  ];
+  $('#myDropdown').ddslick({
+    data: ddData,
+    width: 300,
+    imagePosition: "left",
+    selectText: "Select palette",
+    onSelected: function (data) {
+    }
+});
+  </script>
+
+</div>
+    <div class = "row" style="position: relative;">
+      <div id="map" style="height:85%;"></div>
+      <div id="legend" class="legend" style="position: absolute;
+      top: 0;
+      right: 0;
+      background-color: white;" >
+        <div id = 'newlegend'>
+          <p></p>
+        </div>
+      </div>
+    </div>
+    <div class = "row" style="height:2%; font-family: Tahoma, sans-serif; font-size:12px;">
+      <div id="info">&nbsp;</div>
+    </div>
+  </div>
+  </div>
+	<script src = "./index.js"></script>
+  
+  </body>
+</html>
